@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:title="id title"
+        android:summary="key input plz"
+        android:key="id"></EditTextPreference>
+
+    <CheckBoxPreference
+        android:title="checkBox title"
+        android:summary="checkBox summary"
+        android:key="checkbox"></CheckBoxPreference>
+
+    <SwitchPreference
+        android:title="switch title1"
+        android:summary="switch summary1"></SwitchPreference>
+
+    <SwitchPreference
+        android:title="switch title2"
+        android:summary="switch summary2"
+        android:defaultValue="true"></SwitchPreference>
+
+</PreferenceScreen>
