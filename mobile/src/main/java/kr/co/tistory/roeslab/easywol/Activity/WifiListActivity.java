@@ -25,6 +25,7 @@ import java.util.List;
 
 import kr.co.tistory.roeslab.easywol.Adapter.WifiListAdapter;
 import kr.co.tistory.roeslab.easywol.CommonData.WifiData;
+import kr.co.tistory.roeslab.easywol.Dialog.DialogInputPCInfo;
 import kr.co.tistory.roeslab.easywol.R;
 
 /**
@@ -42,7 +43,7 @@ public class WifiListActivity extends AppCompatActivity {
     private ArrayList<WifiData> mWifiDataArrayList = null;
     private WifiManager mWifiManager = null;
 
-    private DialogCustomWIFIInfo mDialogCustomWIFIInfo = null;
+    private DialogInputPCInfo mDialogPCInfo = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,8 +74,8 @@ public class WifiListActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
-        mDialogCustomWIFIInfo = new DialogCustomWIFIInfo(WifiListActivity.this, R.style.Theme_TransparentDialog);
-        mDialogCustomWIFIInfo.setOnClickListener(onClickListener);
+        mDialogPCInfo = new DialogInputPCInfo(WifiListActivity.this, R.style.Theme_TransparentDialog);
+        mDialogPCInfo.setOnClickListener(onClickListener);
 
         mListView = (ListView)findViewById(R.id.wifi_listView);
         mWifiListAdapter = new WifiListAdapter(this);
@@ -102,7 +103,7 @@ public class WifiListActivity extends AppCompatActivity {
 
             case R.id.action_bar_wifi_input :
                 Log.d(TAG, "onOptionsItemSelected 직접 입력하기 버튼");
-                mDialogCustomWIFIInfo.show();
+                mDialogPCInfo.show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -194,7 +195,7 @@ public class WifiListActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.cell_wifi_add_Button :
                     Log.d(TAG, "addButton Click...");
-                    mDialogCustomWIFIInfo.show();
+                    mDialogPCInfo.show();
                     break;
             }
         }
