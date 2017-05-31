@@ -2,20 +2,30 @@ package kr.co.tistory.roeslab.easywol.CommonData;
 
 /**
  * Created by icwer on 2017-05-17.
- * PC 리스트를 관리하는 클래스
+ * Name, IP, MAC, Port 정보를 가지는 데이터 클래스
  */
 
 public class PCInfoData {
-    private String mac;
-    private String ip;
+    private int no;
     private String name;
+    private String ip;
+    private String mac;
+    private String port;
 
-    public String getMac() {
-        return mac;
+    public int getNo() {
+        return no;
     }
 
-    public void setMac(String mac) {
-        this.mac = mac;
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getIp() {
@@ -26,11 +36,19 @@ public class PCInfoData {
         this.ip = ip;
     }
 
-    public String getName() {
-        return name;
+    public String getMac() {
+        return mac;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 }

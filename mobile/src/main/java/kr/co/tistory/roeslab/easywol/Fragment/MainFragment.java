@@ -20,6 +20,7 @@ import kr.co.tistory.roeslab.easywol.R;
  */
 
 public class MainFragment extends Fragment {
+
     private View mView = null;
     private ListView mListView = null;
     private PCListAdapter mPcListAdapter = null;

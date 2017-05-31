@@ -29,9 +29,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     FragmentTransaction mFragmentTransaction = null;
 
-    private Fragment mMainFragment;
-    private Fragment mSettingFragment;
-
     private ArrayList<PCInfoData> mPcInfoDataArrayList = new ArrayList<PCInfoData>();
 
     @Override
@@ -56,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        }).show();
 
                 Log.d(TAG, "Wifi List를 보여줍니다.");
-//                replaceFragment(new WifiListFragment());
                 Intent intent = new Intent(MainActivity.this, WifiListActivity.class);
                 startActivity(intent);
             }
