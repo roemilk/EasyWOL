@@ -2,7 +2,7 @@ package kr.co.tistory.roeslab.easywol.CommonData;
 
 /**
  * Created by Kim YoungHun on 2017-05-31.
- * SQLite Databse 상수 정보 정의
+ * SQLite Databse 상수 정보 정의s
  */
 
 public class DBConstract {
