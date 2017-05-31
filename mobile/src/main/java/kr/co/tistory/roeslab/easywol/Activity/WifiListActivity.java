@@ -25,7 +25,6 @@ import java.util.List;
 
 import kr.co.tistory.roeslab.easywol.Adapter.WifiListAdapter;
 import kr.co.tistory.roeslab.easywol.CommonData.WifiData;
-import kr.co.tistory.roeslab.easywol.Dialog.DialogCustomWiFiInfo;
 import kr.co.tistory.roeslab.easywol.R;
 
 /**
@@ -43,7 +42,7 @@ public class WifiListActivity extends AppCompatActivity {
     private ArrayList<WifiData> mWifiDataArrayList = null;
     private WifiManager mWifiManager = null;
 
-    private DialogCustomWiFiInfo mDialogCustomWIFIInfo = null;
+    private DialogCustomWIFIInfo mDialogCustomWIFIInfo = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +73,7 @@ public class WifiListActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
-        mDialogCustomWIFIInfo = new DialogCustomWiFiInfo(WifiListActivity.this, R.style.Theme_TransparentDialog);
+        mDialogCustomWIFIInfo = new DialogCustomWIFIInfo(WifiListActivity.this, R.style.Theme_TransparentDialog);
         mDialogCustomWIFIInfo.setOnClickListener(onClickListener);
 
         mListView = (ListView)findViewById(R.id.wifi_listView);
