@@ -6,16 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.andexert.library.RippleView;
 
 import kr.co.tistory.roeslab.easywol.R;
+import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 
 /**
  * Created by icwer on 2017-05-26.
- * sdfsdfsdf
+ * DB작업11111
  */
 
 public class DialogCustomWiFiInfo extends Dialog implements View.OnClickListener {
@@ -24,6 +26,9 @@ public class DialogCustomWiFiInfo extends Dialog implements View.OnClickListener
     private Context mContext = null;
     private EditText mNameEditText, mIpEditText, mMacEditText, mPortEditText;
     private RippleView mSaveRippleView = null;
+
+    private DBManager mDbManager = null;
+
     private View.OnClickListener mListener = null;
 
     public DialogCustomWiFiInfo(@NonNull Context context) {
@@ -47,6 +52,8 @@ public class DialogCustomWiFiInfo extends Dialog implements View.OnClickListener
         mPortEditText = (EditText)findViewById(R.id.input_port_editText);
         mSaveRippleView = (RippleView)findViewById(R.id.input_save_rippleView);
         mSaveRippleView.setOnClickListener(this);
+
+        mDbManager = new DBManager(mContext);
     }
 
     public void setOnClickListener(View.OnClickListener onClickListener){
@@ -62,6 +69,9 @@ public class DialogCustomWiFiInfo extends Dialog implements View.OnClickListener
         if(name.equals("") || ip.equals("") || mac.equals("") || port.equals("")){
             Snackbar.make(getCurrentFocus(), "입력되지 않은 항목이 존재합니다.", Snackbar.LENGTH_SHORT).show();
         }
+
+        mDbManager.insertValues(name, ip, mac, port);
+        Log.d(TAG, "데이터 저11121111122장 완료");
     }
 
     @Override
