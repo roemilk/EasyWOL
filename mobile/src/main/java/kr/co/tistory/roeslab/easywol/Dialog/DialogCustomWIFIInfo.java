@@ -17,7 +17,7 @@ import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 
 /**
  * Created by icwer on 2017-05-26.
- * DB작업11111224444
+ * DB작업1111122444444444444
  */
 
 public class DialogCustomWiFiInfo extends Dialog implements View.OnClickListener {
