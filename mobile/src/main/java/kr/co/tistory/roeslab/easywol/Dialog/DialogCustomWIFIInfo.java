@@ -17,10 +17,10 @@ import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 
 /**
  * Created by icwer on 2017-05-26.
- * DB작업1111122444444444444
+ * DB작업1111122444444444444444
  */
 
-public class DialogCustomWiFiInfo extends Dialog implements View.OnClickListener {
+public class DialogCustomWIFIInfo extends Dialog implements View.OnClickListener {
     private final String TAG = "DialogCustomWIFIInfo";
 
     private Context mContext = null;
@@ -31,12 +31,12 @@ public class DialogCustomWiFiInfo extends Dialog implements View.OnClickListener
 
     private View.OnClickListener mListener = null;
 
-    public DialogCustomWiFiInfo(@NonNull Context context) {
+    public DialogCustomWIFIInfo(@NonNull Context context) {
         super(context);
         this.mContext = context;
     }
 
-    public DialogCustomWiFiInfo(@NonNull Context context, @StyleRes int themeResId) {
+    public DialogCustomWIFIInfo(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
         this.mContext = context;
     }
