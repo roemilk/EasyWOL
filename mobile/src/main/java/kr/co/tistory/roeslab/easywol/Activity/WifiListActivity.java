@@ -55,6 +55,14 @@ public class WifiListActivity extends AppCompatActivity {
         scanAP();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(wifiReceiver != null){
+            unregisterReceiver(wifiReceiver);
+        }
+    }
+
     private void initTestArrayList(){
         mWifiDataArrayList = new ArrayList<>();
 

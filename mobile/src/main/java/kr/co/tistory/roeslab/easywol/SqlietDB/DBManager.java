@@ -4,11 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import kr.co.tistory.roeslab.easywol.CommonData.DBConstract;
 import kr.co.tistory.roeslab.easywol.CommonData.PCInfoData;
+
+import static com.google.android.gms.internal.zzt.TAG;
 
 /**
  * Created by Kim YoungHun on 2017-05-31.
@@ -23,7 +26,6 @@ public class DBManager {
         this.mContext = context;
         this.mDbHelper = new DBHelper(context, DBConstract.DB_NAME, null, DBConstract.DB_VERSION);
         this.mSqLiteDatabase = mDbHelper.getWritableDatabase();
-
     }
 
     /**
@@ -49,7 +51,7 @@ public class DBManager {
     public ArrayList<PCInfoData> selectValues(){
         ArrayList<PCInfoData> pcInfoDataArrayList = new ArrayList<>();
 
-        Cursor cursor = mSqLiteDatabase.rawQuery(DBConstract.TABLE_NAME, null);
+        Cursor cursor = mSqLiteDatabase.rawQuery(DBConstract.SQL_SELECT_TABLE, null);
 
         PCInfoData pcInfoData = null;
         while(cursor.moveToNext()){
@@ -58,6 +60,8 @@ public class DBManager {
             String ip = cursor.getString(2);
             String mac = cursor.getString(3);
             String port = cursor.getString(4);
+
+            Log.d(TAG, "no : " + no + " name : " + name + " ip : " + ip + " mac : " + mac + " port : " + port);
 
             pcInfoData = new PCInfoData();
             pcInfoData.setNo(no);

@@ -1,6 +1,7 @@
 package kr.co.tistory.roeslab.easywol.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,8 @@ public class PCListAdapter extends BaseAdapter {
         String name = pcInfoData.getName();
         String mac = pcInfoData.getMac();
 
-//        Log.d(TAG, "name : " + name);
-//        Log.d(TAG, "mac : " + mac);
+        Log.d(TAG, "name : " + name);
+        Log.d(TAG, "mac : " + mac);
 
         viewHolder.mNameTextView.setText(name);
         viewHolder.mMacTextView.setText(mac);

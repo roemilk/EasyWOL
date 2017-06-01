@@ -23,11 +23,13 @@ import kr.co.tistory.roeslab.easywol.CommonData.PCInfoData;
 import kr.co.tistory.roeslab.easywol.Fragment.MainFragment;
 import kr.co.tistory.roeslab.easywol.Fragment.SettingFragment;
 import kr.co.tistory.roeslab.easywol.R;
+import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = "MainActivity";
 
-    FragmentTransaction mFragmentTransaction = null;
+    private FragmentTransaction mFragmentTransaction = null;
+    private DBManager mDbManager = null;
 
     private ArrayList<PCInfoData> mPcInfoDataArrayList = new ArrayList<PCInfoData>();
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDbManager = new DBManager(this);
+
         replaceFragment(MainFragment.newInstanceFragment());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,14 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("OK", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                Log.d(TAG, "Snackbar onClickListener...");
-//                            }
-//                        }).show();
-
                 Log.d(TAG, "Wifi List를 보여줍니다.");
                 Intent intent = new Intent(MainActivity.this, WifiListActivity.class);
                 startActivity(intent);
@@ -66,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

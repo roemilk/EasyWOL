@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import kr.co.tistory.roeslab.easywol.Adapter.PCListAdapter;
 import kr.co.tistory.roeslab.easywol.CommonData.PCInfoData;
 import kr.co.tistory.roeslab.easywol.R;
+import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 
 /**
  * Created by icwer on 2017-05-20.
@@ -20,10 +21,12 @@ import kr.co.tistory.roeslab.easywol.R;
  */
 
 public class MainFragment extends Fragment {
+    private final String TAG = "MainFragment";
 
     private View mView = null;
     private ListView mListView = null;
     private PCListAdapter mPcListAdapter = null;
+    private DBManager mDbManager = null;
 
     private ArrayList<PCInfoData> mPCInfoDataArrayList = new ArrayList<>();
 
@@ -52,18 +55,21 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mListView = (ListView)mView.findViewById(R.id.listView_wol);
-
-        //더미 데이터
-        for(int i=0; i<99; i++){
-            PCInfoData pcInfoData = new PCInfoData();
-            String val = String.valueOf(i);
-            pcInfoData.setName(val + "name");
-            pcInfoData.setMac(val + "mac");
-            mPCInfoDataArrayList.add(pcInfoData);
-        }
+        mDbManager = new DBManager(getActivity());
+        mPCInfoDataArrayList = mDbManager.selectValues();
 
         mPcListAdapter = new PCListAdapter(getActivity());
         mPcListAdapter.setListData(mPCInfoDataArrayList);
         mListView.setAdapter(mPcListAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Log.d(TAG, "onResume...");
+
+//        Log.d(TAG, "PCInfoDataArrayList Size : " + mPCInfoDataArrayList.size());
+//
+//        mPcListAdapter.notifyDataSetChanged();
     }
 }
