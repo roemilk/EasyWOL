@@ -1,12 +1,11 @@
 package kr.co.tistory.roeslab.easywol.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ public class PCListAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<PCInfoData> mArrayList = null;
+    private View.OnClickListener mOnClickListener = null;
 
     public PCListAdapter(Context context) {
         this.mContext = context;
@@ -30,6 +30,10 @@ public class PCListAdapter extends BaseAdapter {
 
     public void setListData(ArrayList<PCInfoData>list){
         this.mArrayList = list;
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener){
+        this.mOnClickListener = onClickListener;
     }
 
     @Override
@@ -58,30 +62,40 @@ public class PCListAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
-        viewHolder.mMacTextView.setText(null);
         viewHolder.mNameTextView.setText(null);
+        viewHolder.mIpTextView.setText(null);
+        viewHolder.mMacTextView.setText(null);
+        viewHolder.mGpsTextView.setText(null);
 
         PCInfoData pcInfoData = mArrayList.get(position);
         String name = pcInfoData.getName();
+        String ip = pcInfoData.getIp();
         String mac = pcInfoData.getMac();
-
-        Log.d(TAG, "name : " + name);
-        Log.d(TAG, "mac : " + mac);
+        String gps = pcInfoData.getGps();
+        String port = pcInfoData.getPort();
 
         viewHolder.mNameTextView.setText(name);
+        viewHolder.mIpTextView.setText(ip);
         viewHolder.mMacTextView.setText(mac);
-
+        viewHolder.mGpsTextView.setText(gps);
+        viewHolder.mPowerButton.setTag(position);
+        viewHolder.mGpsButton.setTag(position);
+        viewHolder.mPowerButton.setOnClickListener(mOnClickListener);
+        viewHolder.mGpsButton.setOnClickListener(mOnClickListener);
         return convertView;
     }
 
     private class ViewHolder{
-        private TextView mNameTextView, mMacTextView;
-        private Button mPowerButton;
+        private TextView mNameTextView, mIpTextView, mMacTextView, mGpsTextView;
+        private ImageButton mPowerButton, mGpsButton;
 
         public ViewHolder(View convertView) {
             mNameTextView = (TextView)convertView.findViewById(R.id.cell_name_textView);
+            mIpTextView = (TextView)convertView.findViewById(R.id.cell_ip_textView);
             mMacTextView = (TextView)convertView.findViewById(R.id.cell_mac_textView);
-            mPowerButton = (Button)convertView.findViewById(R.id.cell_power_Button);
+            mGpsTextView = (TextView)convertView.findViewById(R.id.cell_gps_textView);
+            mPowerButton = (ImageButton)convertView.findViewById(R.id.cell_power_Button);
+            mGpsButton = (ImageButton)convertView.findViewById(R.id.cell_gps_Button);
         }
     }
 }

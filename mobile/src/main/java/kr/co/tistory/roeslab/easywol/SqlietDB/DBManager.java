@@ -60,8 +60,9 @@ public class DBManager {
             String ip = cursor.getString(2);
             String mac = cursor.getString(3);
             String port = cursor.getString(4);
+            String gps = cursor.getString(5);
 
-            Log.d(TAG, "no : " + no + " name : " + name + " ip : " + ip + " mac : " + mac + " port : " + port);
+            Log.d(TAG, "no : " + no + " name : " + name + " ip : " + ip + " mac : " + mac + " port : " + port + " GPS : " + gps);
 
             pcInfoData = new PCInfoData();
             pcInfoData.setNo(no);
@@ -69,6 +70,7 @@ public class DBManager {
             pcInfoData.setIp(ip);
             pcInfoData.setMac(mac);
             pcInfoData.setPort(port);
+
 
             pcInfoDataArrayList.add(pcInfoData);
         }

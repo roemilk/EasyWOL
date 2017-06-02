@@ -11,6 +11,15 @@ public class PCInfoData {
     private String ip;
     private String mac;
     private String port;
+    private String gps;
+
+    public String getGps() {
+        return gps;
+    }
+
+    public void setGps(String gps) {
+        this.gps = gps;
+    }
 
     public int getNo() {
         return no;

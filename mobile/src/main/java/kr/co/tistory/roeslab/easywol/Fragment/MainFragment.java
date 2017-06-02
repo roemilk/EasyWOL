@@ -3,10 +3,13 @@ package kr.co.tistory.roeslab.easywol.Fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -57,19 +60,58 @@ public class MainFragment extends Fragment {
         mListView = (ListView)mView.findViewById(R.id.listView_wol);
         mDbManager = new DBManager(getActivity());
         mPCInfoDataArrayList = mDbManager.selectValues();
-
         mPcListAdapter = new PCListAdapter(getActivity());
         mPcListAdapter.setListData(mPCInfoDataArrayList);
+        mPcListAdapter.setOnClickListener(onClickListener);
         mListView.setAdapter(mPcListAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "테스트");
+                Toast.makeText(getContext(), "테스트", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mListView.setOnItemLongClickListener(onItemLongClickListener);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        Log.d(TAG, "onResume...");
 
-//        Log.d(TAG, "PCInfoDataArrayList Size : " + mPCInfoDataArrayList.size());
-//
-//        mPcListAdapter.notifyDataSetChanged();
     }
+
+    AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+            return false;
+        }
+    };
+
+    /**
+     * OnClickListener
+     */
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.d(TAG, "onClick..");
+            switch (v.getId()){
+                case R.id.cell_power_Button : //전원 켜기 기능
+                    int position = (Integer)v.getTag();
+                    PCInfoData pcInfoData = mPCInfoDataArrayList.get(position);
+                    String name = pcInfoData.getName();
+                    String ipAddress = pcInfoData.getIp();
+                    String mac = pcInfoData.getMac();
+//                    MagicPacket.sendMagicPacket(ipAddress, mac);
+
+                    Toast.makeText(getContext(), name + " PC의 전원을 켰습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case R.id.cell_gps_Button : //스마트 GPS 기능
+                    Toast.makeText(getContext(), "스마트 WOL을 설정합니다.", Toast.LENGTH_SHORT).show();
+
+                    break;
+            }
+        }
+    };
 }

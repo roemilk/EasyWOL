@@ -17,11 +17,12 @@ public class DBConstract {
     public static final String COL_IP = "IP"; //아이피
     public static final String COL_MAC = "MAC"; //맥
     public static final String COL_PORT = "PORT"; //포트
+    public static final String COL_GPS = "GPS"; //GPS 좌표값
 
     /**
      * 테이블 생성
      */
-    public static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + COL_NO + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_NAME + " TEXT, " + COL_IP + " TEXT, " + COL_MAC + " TEXT, " + COL_PORT + " TEXT" + ")";
+    public static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + COL_NO + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_NAME + " TEXT, " + COL_IP + " TEXT, " + COL_MAC + " TEXT, " + COL_PORT + " TEXT, " +  COL_GPS + " TEXT" + ")";
 
     /**
      * 테이블 삭제
