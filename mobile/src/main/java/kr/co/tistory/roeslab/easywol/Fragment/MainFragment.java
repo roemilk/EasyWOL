@@ -57,34 +57,40 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "onActivityCreated..");
+
         mListView = (ListView)mView.findViewById(R.id.listView_wol);
         mDbManager = new DBManager(getActivity());
-        mPCInfoDataArrayList = mDbManager.selectValues();
         mPcListAdapter = new PCListAdapter(getActivity());
-        mPcListAdapter.setListData(mPCInfoDataArrayList);
         mPcListAdapter.setOnClickListener(onClickListener);
         mListView.setAdapter(mPcListAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "테스트");
-                Toast.makeText(getContext(), "테스트", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mListView.setOnItemClickListener(onItemClickListener);
         mListView.setOnItemLongClickListener(onItemLongClickListener);
+        mListView.setLongClickable(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        Log.d(TAG, "onResume...");
+        mPCInfoDataArrayList = mDbManager.selectValues();
+        mPcListAdapter.setListData(mPCInfoDataArrayList);
+        mPcListAdapter.notifyDataSetChanged();
     }
+
+    AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Log.d(TAG, "OnItemClickListener...");
+
+        }
+    };
 
     AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-            return false;
+            Log.d(TAG, "onItemLongClickListener...");
+            return true;
         }
     };
 

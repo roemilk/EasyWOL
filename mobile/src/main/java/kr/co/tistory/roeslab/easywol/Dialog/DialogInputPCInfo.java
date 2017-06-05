@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -71,15 +70,13 @@ public class DialogInputPCInfo extends Dialog implements View.OnClickListener {
         }
 
         mDbManager.insertValues(name, ip, mac, port);
-        Log.d(TAG, "데이터 저11121111122장 완료");
     }
 
     @Override
     public void onClick(View v) {
-        save();
         switch (v.getId()){
             case R.id.input_save_rippleView :
-
+                save();
                 break;
         }
         mListener.onClick(v);

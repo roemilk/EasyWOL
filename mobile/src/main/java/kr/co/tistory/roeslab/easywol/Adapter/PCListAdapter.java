@@ -21,7 +21,7 @@ public class PCListAdapter extends BaseAdapter {
     private final String TAG = "PCListAdapter";
 
     private Context mContext;
-    private ArrayList<PCInfoData> mArrayList = null;
+    private ArrayList<PCInfoData> mArrayList = new ArrayList<>();
     private View.OnClickListener mOnClickListener = null;
 
     public PCListAdapter(Context context) {

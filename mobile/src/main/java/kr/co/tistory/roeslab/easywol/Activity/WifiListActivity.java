@@ -205,6 +205,11 @@ public class WifiListActivity extends AppCompatActivity {
                     Log.d(TAG, "addButton Click...");
                     mDialogPCInfo.show();
                     break;
+
+                case R.id.input_save_rippleView :
+                    mDialogPCInfo.dismiss();
+                    finish();
+                    break;
             }
         }
     };
