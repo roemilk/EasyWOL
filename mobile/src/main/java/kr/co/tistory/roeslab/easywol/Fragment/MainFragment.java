@@ -17,6 +17,7 @@ import kr.co.tistory.roeslab.easywol.Adapter.PCListAdapter;
 import kr.co.tistory.roeslab.easywol.CommonData.PCInfoData;
 import kr.co.tistory.roeslab.easywol.R;
 import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
+import redpig.utility.network.MagicPacket;
 
 /**
  * Created by icwer on 2017-05-20.
@@ -108,7 +109,7 @@ public class MainFragment extends Fragment {
                     String name = pcInfoData.getName();
                     String ipAddress = pcInfoData.getIp();
                     String mac = pcInfoData.getMac();
-//                    MagicPacket.sendMagicPacket(ipAddress, mac);
+                    MagicPacket.sendMagicPacket(ipAddress, mac);
 
                     Toast.makeText(getContext(), name + " PC의 전원을 켰습니다.", Toast.LENGTH_SHORT).show();
                     break;
