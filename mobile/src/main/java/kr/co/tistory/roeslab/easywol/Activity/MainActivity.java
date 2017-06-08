@@ -16,9 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
 import kr.co.tistory.roeslab.easywol.CommonData.PCInfoData;
 import kr.co.tistory.roeslab.easywol.Fragment.MainFragment;
 import kr.co.tistory.roeslab.easywol.Fragment.SettingFragment;
@@ -32,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DBManager mDbManager = null;
 
     private ArrayList<PCInfoData> mPcInfoDataArrayList = new ArrayList<PCInfoData>();
+
+    private MenuItem mMenuItemSetting = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -91,13 +91,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

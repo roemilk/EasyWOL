@@ -1,17 +1,23 @@
 package kr.co.tistory.roeslab.easywol.Fragment;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.co.tistory.roeslab.easywol.Adapter.PCListAdapter;
 import kr.co.tistory.roeslab.easywol.CommonData.PCInfoData;
@@ -29,10 +35,14 @@ public class MainFragment extends Fragment {
 
     private View mView = null;
     private ListView mListView = null;
+    private MenuItem mDeleteItem, mSettingItem;
+
     private PCListAdapter mPcListAdapter = null;
     private DBManager mDbManager = null;
-
     private ArrayList<PCInfoData> mPCInfoDataArrayList = new ArrayList<>();
+    private HashMap<Integer, PCInfoData> mSelectedPCInfoHashMap = new HashMap<>();
+
+    private boolean mEditable = false; //편집모드
 
     public MainFragment() {
     }
@@ -51,7 +61,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        setHasOptionsMenu(true);
         return mView;
     }
 
@@ -71,6 +81,33 @@ public class MainFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d(TAG, "onCreateOptionMenu..");
+        inflater.inflate(R.menu.main, menu);
+
+        mDeleteItem = menu.findItem(R.id.action_delete);
+        mSettingItem = menu.findItem(R.id.action_settings);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch(itemId){
+            case R.id.action_delete :
+                Log.d(TAG, "menu delete..");
+
+                break;
+            case R.id.action_settings :
+                Log.d(TAG, "menu settings..");
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume...");
@@ -79,18 +116,68 @@ public class MainFragment extends Fragment {
         mPcListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 편집모드를 체크하고 해당 아이템을 선택하여 Map에 저장합니다.
+     * @param view
+     * @param position
+     */
+    private void checkEditableSelectItem(View view, int position){
+        PCInfoData data = mPCInfoDataArrayList.get(position);
+        RelativeLayout rootLay = (RelativeLayout)view.findViewById(R.id.cell_root_lay);
+        if(mEditable){ //편집 모드
+            if(data.isCheck()){ //이미 체크된 상태
+                data.setCheck(false);
+                mSelectedPCInfoHashMap.remove(position);
+                rootLay.setBackground(null);
+            }else{ //체크되지 않은 상태
+                data.setCheck(true);
+                mSelectedPCInfoHashMap.put(position, data);
+                rootLay.setBackgroundColor(Color.YELLOW);
+            }
+            rootLay.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+            Log.d(TAG, "HashMap Size : " + mSelectedPCInfoHashMap.size());
+        }else{ //비편집 모드
+            Toast.makeText(getContext(), "비편집모드 클릭", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 선택된 아이템이 모두 해제되었는지 확인하고 Editable 상태를 변경한다.
+     * @return
+     */
+    private boolean checkSelectedItemEmpty(){
+        if(mSelectedPCInfoHashMap.size() != 0){
+            return false;
+        }else{
+            mEditable = false;
+            Log.d(TAG, "HashMap Size가 0이므로 편집모드를 해제합니다.");
+            return true;
+        }
+    }
+
+    /**
+     * OnItemClickListener
+     */
     AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d(TAG, "OnItemClickListener...");
-
+            Log.d(TAG, "OnItemClickListener... position : " + position + " id : " + id);
+            checkEditableSelectItem(view, position);
+            checkSelectedItemEmpty();
         }
     };
 
+    /**
+     * OnItemLongClickListener
+     */
     AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             Log.d(TAG, "onItemLongClickListener...");
+            mEditable = !mEditable;
+            checkEditableSelectItem(view, position);
+            Log.d(TAG, "Editable State : " + mEditable);
             return true;
         }
     };
@@ -109,9 +196,12 @@ public class MainFragment extends Fragment {
                     String name = pcInfoData.getName();
                     String ipAddress = pcInfoData.getIp();
                     String mac = pcInfoData.getMac();
-                    MagicPacket.sendMagicPacket(ipAddress, mac);
-
-                    Toast.makeText(getContext(), name + " PC의 전원을 켰습니다.", Toast.LENGTH_SHORT).show();
+                    boolean resultMagicPacket = MagicPacket.sendMagicPacket(ipAddress, mac);
+                    if(resultMagicPacket){
+                        Toast.makeText(getContext(), name + " PC의 전원을 켰습니다.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getContext(), name + " PC로 매직패킷의 전송이 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
                     break;
 
                 case R.id.cell_gps_Button : //스마트 GPS 기능

@@ -12,6 +12,15 @@ public class PCInfoData {
     private String mac;
     private String port;
     private String gps;
+    private boolean check = false;
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public String getGps() {
         return gps;
