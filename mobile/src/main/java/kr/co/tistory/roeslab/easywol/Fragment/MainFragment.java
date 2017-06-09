@@ -25,12 +25,14 @@ import kr.co.tistory.roeslab.easywol.R;
 import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 import redpig.utility.network.MagicPacket;
 
+import static android.R.attr.name;
+
 /**
  * Created by icwer on 2017-05-20.
  * 메인리스트 프래그먼트111
  */
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketCallbackListener {
     private final String TAG = "MainFragment";
 
     private View mView = null;
@@ -125,11 +127,11 @@ public class MainFragment extends Fragment {
         PCInfoData data = mPCInfoDataArrayList.get(position);
         RelativeLayout rootLay = (RelativeLayout)view.findViewById(R.id.cell_root_lay);
         if(mEditable){ //편집 모드
-            if(data.isCheck()){ //이미 체크된 상태
+            if(data.isCheck()){ //선택 해제
                 data.setCheck(false);
                 mSelectedPCInfoHashMap.remove(position);
                 rootLay.setBackground(null);
-            }else{ //체크되지 않은 상태
+            }else{ //선택
                 data.setCheck(true);
                 mSelectedPCInfoHashMap.put(position, data);
                 rootLay.setBackgroundColor(Color.YELLOW);
@@ -157,6 +159,17 @@ public class MainFragment extends Fragment {
     }
 
     /**
+     * 선택된 모든 아이템을 선택 해제합니다.
+     */
+    private void allUnSelect(){
+        mSelectedPCInfoHashMap.clear();
+        for(PCInfoData data : mPCInfoDataArrayList){
+            data.setCheck(false);
+        }
+        mPcListAdapter.notifyDataSetChanged();
+    }
+
+    /**
      * OnItemClickListener
      */
     AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
@@ -178,6 +191,14 @@ public class MainFragment extends Fragment {
             mEditable = !mEditable;
             checkEditableSelectItem(view, position);
             Log.d(TAG, "Editable State : " + mEditable);
+
+            if(!mEditable){
+                mDeleteItem.setVisible(false);
+                allUnSelect();
+            }else{
+                mDeleteItem.setVisible(true);
+            }
+
             return true;
         }
     };
@@ -196,19 +217,36 @@ public class MainFragment extends Fragment {
                     String name = pcInfoData.getName();
                     String ipAddress = pcInfoData.getIp();
                     String mac = pcInfoData.getMac();
-                    boolean resultMagicPacket = MagicPacket.sendMagicPacket(ipAddress, mac);
-                    if(resultMagicPacket){
-                        Toast.makeText(getContext(), name + " PC의 전원을 켰습니다.", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getContext(), name + " PC로 매직패킷의 전송이 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                    }
+
+                    Log.d(TAG, "ipAddress : " + ipAddress);
+                    Log.d(TAG, "mac : " + mac);
+                    MagicPacket.sendMagicPacket(ipAddress, mac, MainFragment.this);
                     break;
 
                 case R.id.cell_gps_Button : //스마트 GPS 기능
                     Toast.makeText(getContext(), "스마트 WOL을 설정합니다.", Toast.LENGTH_SHORT).show();
-
                     break;
             }
         }
     };
+
+    @Override
+    public void onSuccessSendingMagicPacket() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), name + " PC의 전원을 켰습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onFailedSendingMagicPacket(Exception exception) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), name + " PC로 매직패킷의 전송이 실패하였습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

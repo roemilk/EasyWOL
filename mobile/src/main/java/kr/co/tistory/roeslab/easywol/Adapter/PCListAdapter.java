@@ -1,11 +1,13 @@
 package kr.co.tistory.roeslab.easywol.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ public class PCListAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
 
+        viewHolder.mRootLay.setBackground(null);
         viewHolder.mNameTextView.setText(null);
         viewHolder.mIpTextView.setText(null);
         viewHolder.mMacTextView.setText(null);
@@ -73,6 +76,10 @@ public class PCListAdapter extends BaseAdapter {
         String mac = pcInfoData.getMac();
         String gps = pcInfoData.getGps();
         String port = pcInfoData.getPort();
+
+        if(pcInfoData.isCheck()){
+            viewHolder.mRootLay.setBackgroundColor(Color.YELLOW);
+        }
 
         viewHolder.mNameTextView.setText(name);
         viewHolder.mIpTextView.setText(ip);
@@ -86,10 +93,12 @@ public class PCListAdapter extends BaseAdapter {
     }
 
     private class ViewHolder{
+        private RelativeLayout mRootLay;
         private TextView mNameTextView, mIpTextView, mMacTextView, mGpsTextView;
         private ImageButton mPowerButton, mGpsButton;
 
         public ViewHolder(View convertView) {
+            mRootLay = (RelativeLayout)convertView.findViewById(R.id.cell_root_lay);
             mNameTextView = (TextView)convertView.findViewById(R.id.cell_name_textView);
             mIpTextView = (TextView)convertView.findViewById(R.id.cell_ip_textView);
             mMacTextView = (TextView)convertView.findViewById(R.id.cell_mac_textView);
