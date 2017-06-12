@@ -33,4 +33,9 @@ public class DBConstract {
      * 테이블 데이터 조회
      */
     public static final String SQL_SELECT_TABLE = "SELECT * FROM " + TABLE_NAME;
+
+    /**
+     * 특정 데이터 조회
+     */
+    public static final String SQL_SELECT_TABLE_COLUMN = "SELECT * FROM " + TABLE_NAME + " WHERE NO = ";
 }

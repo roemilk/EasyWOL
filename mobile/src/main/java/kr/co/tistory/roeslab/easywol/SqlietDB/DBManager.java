@@ -45,7 +45,37 @@ public class DBManager {
     }
 
     /**
-     * 해당 테이블의 레코드를 조회하여 결과를 리스트형태로 반환한다.
+     * 특정 데이터를 조회합니다.
+     * @param pNo
+     * @return
+     */
+    public PCInfoData selectValues(int pNo){
+        Cursor cursor = mSqLiteDatabase.rawQuery(DBConstract.SQL_SELECT_TABLE_COLUMN + pNo, null);
+
+        PCInfoData pcInfoData = null;
+        while(cursor.moveToNext()){
+            int no = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String ip = cursor.getString(2);
+            String mac = cursor.getString(3);
+            String port = cursor.getString(4);
+            String gps = cursor.getString(5);
+
+            Log.d(TAG, "no : " + no + " name : " + name + " ip : " + ip + " mac : " + mac + " port : " + port + " GPS : " + gps);
+
+            pcInfoData = new PCInfoData();
+            pcInfoData.setNo(no);
+            pcInfoData.setName(name);
+            pcInfoData.setIp(ip);
+            pcInfoData.setMac(mac);
+            pcInfoData.setPort(port);
+        }
+
+        return pcInfoData;
+    }
+
+    /**
+     * 테이블의 전체 레코드를 조회하여 결과를 리스트형태로 반환한다.
      * @return
      */
     public ArrayList<PCInfoData> selectValues(){
@@ -85,5 +115,22 @@ public class DBManager {
      */
     public void deleteValues(int no){
         mSqLiteDatabase.delete(DBConstract.TABLE_NAME, DBConstract.COL_NO + "=" + no, null);
+    }
+
+    /**
+     * 해당 일련번호의 레코드를 업데이트한다.
+     * @param no
+     * @param name
+     * @param ip
+     * @param mac
+     * @param port
+     */
+    public void updateValues(int no, String name, String ip, String mac, String port){
+        ContentValues values = new ContentValues();
+        values.put(DBConstract.COL_NAME, name);
+        values.put(DBConstract.COL_IP, ip);
+        values.put(DBConstract.COL_MAC, mac);
+        values.put(DBConstract.COL_PORT, port);
+        mSqLiteDatabase.update(DBConstract.TABLE_NAME, values, "no=?", new String[]{String.valueOf(no)});
     }
 }

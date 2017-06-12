@@ -68,8 +68,15 @@ public class DialogInputPCInfo extends Dialog implements View.OnClickListener {
         if(name.equals("") || ip.equals("") || mac.equals("") || port.equals("")){
             Snackbar.make(getCurrentFocus(), "입력되지 않은 항목이 존재합니다.", Snackbar.LENGTH_SHORT).show();
         }
-
         mDbManager.insertValues(name, ip, mac, port);
+    }
+
+    /**
+     * 데이터를 조회하고 세팅합니다.
+     * @param no
+     */
+    private void loadValues(int no){
+        mDbManager.selectValues(no);
     }
 
     @Override

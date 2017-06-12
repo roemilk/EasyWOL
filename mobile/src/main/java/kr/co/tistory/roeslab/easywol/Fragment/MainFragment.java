@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 import kr.co.tistory.roeslab.easywol.Adapter.PCListAdapter;
 import kr.co.tistory.roeslab.easywol.CommonData.PCInfoData;
+import kr.co.tistory.roeslab.easywol.Dialog.DialogInputPCInfo;
 import kr.co.tistory.roeslab.easywol.R;
 import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 import redpig.utility.network.MagicPacket;
@@ -45,6 +46,7 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
     private HashMap<Integer, PCInfoData> mSelectedPCInfoHashMap = new HashMap<>();
 
     private boolean mEditable = false; //편집모드
+    private DialogInputPCInfo mDialogPCInfo;
 
     public MainFragment() {
     }
@@ -119,6 +121,14 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
     }
 
     /**
+     * 비편집모드에서 아이템을 선택시 업데이트 다이얼로그를 호출합니다.
+     */
+    private void showUpdateDialog(int no){
+        mDialogPCInfo = new DialogInputPCInfo(getContext(), R.style.Theme_TransparentDialog);
+        mDialogPCInfo.setOnClickListener(onClickListener);
+    }
+
+    /**
      * 편집모드를 체크하고 해당 아이템을 선택하여 Map에 저장합니다.
      * @param view
      * @param position
@@ -140,7 +150,9 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
 
             Log.d(TAG, "HashMap Size : " + mSelectedPCInfoHashMap.size());
         }else{ //비편집 모드
-            Toast.makeText(getContext(), "비편집모드 클릭", Toast.LENGTH_SHORT).show();
+            int no = data.getNo();
+            Log.d(TAG, "비편집 모드 아이템 클릭 NO : " + no);
+            showUpdateDialog(no);
         }
     }
 
@@ -211,6 +223,10 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
         public void onClick(View v) {
             Log.d(TAG, "onClick..");
             switch (v.getId()){
+                case R.id.input_save_rippleView :
+
+                    break;
+
                 case R.id.cell_power_Button : //전원 켜기 기능
                     int position = (Integer)v.getTag();
                     PCInfoData pcInfoData = mPCInfoDataArrayList.get(position);
