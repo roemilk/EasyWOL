@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.andexert.library.RippleView;
 
+import kr.co.tistory.roeslab.easywol.CommonData.PCInfoData;
 import kr.co.tistory.roeslab.easywol.R;
 import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 
@@ -75,8 +76,13 @@ public class DialogInputPCInfo extends Dialog implements View.OnClickListener {
      * 데이터를 조회하고 세팅합니다.
      * @param no
      */
-    private void loadValues(int no){
-        mDbManager.selectValues(no);
+    public void loadValues(int no){
+        PCInfoData pcInfoData = mDbManager.selectValues(no);
+
+        mNameEditText.setText(pcInfoData.getName());
+        mIpEditText.setText(pcInfoData.getIp());
+        mMacEditText.setText(pcInfoData.getMac());
+        mPortEditText.setText(pcInfoData.getPort());
     }
 
     @Override

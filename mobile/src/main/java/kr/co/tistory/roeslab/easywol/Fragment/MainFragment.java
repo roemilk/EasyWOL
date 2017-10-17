@@ -78,6 +78,7 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
         mDbManager = new DBManager(getActivity());
         mPcListAdapter = new PCListAdapter(getActivity());
         mPcListAdapter.setOnClickListener(onClickListener);
+
         mListView.setAdapter(mPcListAdapter);
         mListView.setOnItemClickListener(onItemClickListener);
         mListView.setOnItemLongClickListener(onItemLongClickListener);
@@ -124,8 +125,10 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
      * 비편집모드에서 아이템을 선택시 업데이트 다이얼로그를 호출합니다.
      */
     private void showUpdateDialog(int no){
-        mDialogPCInfo = new DialogInputPCInfo(getContext(), R.style.Theme_TransparentDialog);
+        mDialogPCInfo = new DialogInputPCInfo(getActivity(), R.style.Theme_TransparentDialog);
         mDialogPCInfo.setOnClickListener(onClickListener);
+        mDialogPCInfo.show();
+        mDialogPCInfo.loadValues(no);
     }
 
     /**
@@ -240,7 +243,7 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
                     break;
 
                 case R.id.cell_gps_Button : //스마트 GPS 기능
-                    Toast.makeText(getContext(), "스마트 WOL을 설정합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "스마트 WOL을 설정합니다.", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -251,7 +254,7 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getContext(), name + " PC의 전원을 켰습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), name + " PC의 전원을 켰습니다.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -261,7 +264,7 @@ public class MainFragment extends Fragment implements MagicPacket.OnMagicPacketC
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getContext(), name + " PC로 매직패킷의 전송이 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), name + " PC로 매직패킷의 전송이 실패하였습니다.", Toast.LENGTH_SHORT).show();
             }
         });
     }

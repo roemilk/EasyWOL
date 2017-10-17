@@ -18,6 +18,8 @@ import static com.google.android.gms.internal.zzt.TAG;
  */
 
 public class DBManager {
+    private static final String TAG = "DBManager";
+
     private Context mContext = null;
     private DBHelper mDbHelper = null;
     private SQLiteDatabase mSqLiteDatabase = null;
