@@ -24,6 +24,7 @@ import kr.co.tistory.roeslab.easywol.R;
 import kr.co.tistory.roeslab.easywol.SqlietDB.DBManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public static String test = "11313";
     private final String TAG = "MainActivity";
 
     private FragmentTransaction mFragmentTransaction = null;
